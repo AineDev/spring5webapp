@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+@Entity
 public class Book {
 
     @Id
@@ -13,6 +14,9 @@ public class Book {
 
     private String title;
     private String isbn;
+
+    @ManyToOne
+    private Publisher publisher;
 
     @ManyToMany
     @JoinTable(name = "author_book", joinColumns = @JoinColumn(name = "book_id"),
@@ -25,6 +29,10 @@ public class Book {
     public Book(String title, String isbn) {
         this.title = title;
         this.isbn = isbn;
+    }
+
+    public Publisher getPublisher() {
+        return publisher;
     }
 
     public Long getId() {
@@ -41,6 +49,10 @@ public class Book {
 
     public Set<Author> getAuthors() {
         return authors;
+    }
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
     }
 
     public void setTitle(String title) {
@@ -65,7 +77,6 @@ public class Book {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", isbn='" + isbn + '\'' +
-                ", authors=" + authors +
                 '}';
     }
 
